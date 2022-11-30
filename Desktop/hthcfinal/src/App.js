@@ -1,38 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbarex from './component/navbar';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import News from "./pages/News";
 
-function App() {
+const App = () => {
   return (
-    <div className='all'>
-       <div>
-        <Navbarex/>
-      </div>
-      <div className='block1'>
-        <div className='titlename'>
-          Healtcareservice
-        </div>
-        <hr></hr>
-        <div className='title'>
-          News
-          <button>Go to page</button>
-        </div>
-        <hr></hr>
-        <div className='title'>
-          Medicine
-          <button>Go to page</button>
-        </div>
-        <hr></hr>
-      </div>
-    </div>
-    
-    
-
+    <Layout>
+      <Routes>
+        <Route element={<Home />} path="/" />
+        <Route element={<News />} path="/news" />
+      </Routes>
+    </Layout>
   );
-}
+};
 
 export default App;
