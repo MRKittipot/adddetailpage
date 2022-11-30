@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  return <ButtomCustom {...props}>{props.title}</ButtomCustom>;
+  return (
+    <ButtomCustom {...props} primary={props.color}>
+      {props.title}
+    </ButtomCustom>
+  );
 };
 
 export default Button;
@@ -10,7 +14,7 @@ export default Button;
 const ButtomCustom = styled.button`
   appearance: button;
   backface-visibility: hidden;
-  background-color: #405cf5;
+  background-color: ${(props) => (props.primary ? props.primary : "#549ef2")};
   border-radius: 6px;
   border-width: 0;
   box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
@@ -29,7 +33,7 @@ const ButtomCustom = styled.button`
   padding: 0 25px;
   position: relative;
   text-align: center;
-  text-transform: none;
+  text-transform: capitalize;
   transform: translateZ(0);
   transition: all 0.2s, box-shadow 0.08s ease-in;
   user-select: none;

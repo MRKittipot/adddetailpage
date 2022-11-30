@@ -3,18 +3,18 @@ import TableCustom from "../common/TableCustom.common";
 import { MedicineMock } from "../mocks/MedicineMock";
 import styled from "styled-components";
 
-const News = () => {
+const Medicine = () => {
   return (
     <Container>
       <Box>
-        <Heading1>News</Heading1>
+        <Heading1>Medicine</Heading1>
       </Box>
       <TableCustom data={MedicineMock} />
     </Container>
   );
 };
 
-export default News;
+export default Medicine;
 
 const Container = styled.div`
   margin-top: 5rem;
