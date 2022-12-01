@@ -1,11 +1,12 @@
 import React from "react";
 import FormLayout from "../common/FormLayout.common";
+import Layout from "../components/Layout";
 
 const AddData = () => {
   return (
-    <div>
+    <Layout>
       <FormLayout />
-    </div>
+    </Layout>
   );
 };
 

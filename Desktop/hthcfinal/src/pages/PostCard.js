@@ -2,16 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import Card from "../components/Card";
 import { useSearchQuery } from "../hooks/useSearchQuery";
+import { useParams } from "react-router-dom";
+import Layout from "../components/Layout";
 
 const PostCard = () => {
   const { searchQuery } = useSearchQuery();
-
-  console.log(searchQuery);
+  const { id } = useParams();
 
   return (
-    <Container>
-      <Card />
-    </Container>
+    <Layout>
+      <Container>
+        <Card />
+      </Container>
+    </Layout>
   );
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Center from "../common/Center.common";
 import HomeTitle from "../components/HomeTitle";
+import Layout from "../components/Layout";
 
 const Home = () => {
   const Title = [
@@ -16,23 +17,25 @@ const Home = () => {
   ];
 
   return (
-    <Center>
-      <Container>
-        <div>
+    <Layout>
+      <Center>
+        <Container>
           <div>
-            <Heding1Custom>HealtCare</Heding1Custom>
+            <div>
+              <Heding1Custom>HealtCare</Heding1Custom>
+            </div>
+            <div>
+              <hr />
+            </div>
+            <div>
+              {Title.map((item) => {
+                return <HomeTitle {...item} />;
+              })}
+            </div>
           </div>
-          <div>
-            <hr />
-          </div>
-          <div>
-            {Title.map((item) => {
-              return <HomeTitle {...item} />;
-            })}
-          </div>
-        </div>
-      </Container>
-    </Center>
+        </Container>
+      </Center>
+    </Layout>
   );
 };
 
