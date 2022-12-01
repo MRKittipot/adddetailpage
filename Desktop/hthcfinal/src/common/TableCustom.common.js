@@ -6,9 +6,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function TableCustom(props) {
+  const naviagate = useNavigate();
   const { data } = props;
+
+  const handleClick = (id) => {
+    naviagate(`/card/news?q=${id}`);
+  };
 
   return (
     <TableContainerCustom>
@@ -25,6 +31,7 @@ export default function TableCustom(props) {
             <TableCellCustom
               key={row.title}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              onClick={() => handleClick(row.id)}
             >
               <TableCell component="th" scope="row">
                 {row.title}

@@ -1,22 +1,41 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../common/Button.common";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Chip } from "@mui/material";
 
 const Card = (props) => {
   const [isEditAble, setIsEditAble] = React.useState(false);
-  const ref = React.useRef(null);
+
+  const [form, setForm] = React.useState({
+    title: "",
+    description: "",
+  });
+
   const navigate = useNavigate();
+  const { id } = useParams();
+  const textReference = React.useRef(null);
 
   const handleClick = () => {
-    ref.current.focus();
+    setIsEditAble(true);
+    textReference.current.focus();
+  };
+
+  const handleChange = (e, value) => {
+    setIsEditAble(true);
+    setForm({ ...form, [value]: e.currentTarget.textContent });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsEditAble(false);
+    console.log(form);
   };
 
   const alertDelete = () => {
     if (window.confirm("Are you sure you wish to delete this item?")) {
       // deleteItem();
-      navigate("/");
+      navigate(`/${id}`);
     }
   };
   return (
@@ -25,21 +44,23 @@ const Card = (props) => {
         <div>
           <Header>
             <Heading1
-              contentEditable="true"
-              onInput={(e) => setIsEditAble(true)}
+              contentEditable={isEditAble}
+              onInput={(e) => handleChange(e, "title")}
               suppressContentEditableWarning={true}
+              edit={isEditAble}
             >
               Title
             </Heading1>
-            <Chip label="Medicine" />
+            <Chip label={id} />
           </Header>
           <div>
             <Text
-              contentEditable="true"
+              contentEditable={true}
               spellCheck="false"
-              ref={ref}
-              onInput={(e) => setIsEditAble(true)}
+              ref={textReference}
+              onInput={(e) => handleChange(e, "description")}
               suppressContentEditableWarning={true}
+              edit={isEditAble}
             >
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. In
               labore maxime quod dolore repellendus placeat qui nostrum facere,
@@ -51,7 +72,7 @@ const Card = (props) => {
         <FormButton>
           <Button title="Delete" color="red" onClick={alertDelete} />
           {isEditAble ? (
-            <Button title="Save" color="green" />
+            <Button title="Save" color="green" onClick={handleSubmit} />
           ) : (
             <Button title="Edit" color="#344D67" onClick={handleClick} />
           )}
@@ -85,11 +106,16 @@ const Heading1 = styled.h1`
     border-radius: 5px;
   }
 
-  &:hover {
-    border: 1px solid #549ef2;
-    padding: 0 0.5vw;
-    border-radius: 5px;
-  }
+  ${(props) =>
+    props.edit
+      ? `
+      &:hover {
+        border: 1px solid #549ef2;
+        padding: 0 0.5vw;
+        border-radius: 5px;
+      }
+  `
+      : ""}
 
   transition: all 0.3s ease-in-out;
 `;
@@ -116,17 +142,22 @@ const Text = styled.p`
   color: #b2b2b2;
   outline: none;
 
-  &:focus {
-    border: 1px solid #549ef2;
-    padding: 0 0.5vw;
-    border-radius: 5px;
-  }
+  ${(props) =>
+    props.edit
+      ? `
+        &:focus {
+          border: 1px solid #549ef2;
+          padding: 0 0.5vw;
+          border-radius: 5px;
+        }
 
-  &:hover {
-    border: 1px solid #549ef2;
-    padding: 0 0.5vw;
-    border-radius: 5px;
-  }
+        &:hover {
+          border: 1px solid #549ef2;
+          padding: 0 0.5vw;
+          border-radius: 5px;
+        }
+      `
+      : ""}
 
   transition: all 0.3s ease-in-out;
 `;

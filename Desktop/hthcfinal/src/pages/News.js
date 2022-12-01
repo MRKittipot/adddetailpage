@@ -1,6 +1,6 @@
 import React from "react";
 import TableCustom from "../common/TableCustom.common";
-import { MedicineMock } from "../mocks/MedicineMock";
+import { NewsMock } from "../mocks/NewsMock";
 import styled from "styled-components";
 import Layout from "../components/Layout";
 
@@ -11,7 +11,7 @@ const News = () => {
         <Box>
           <Heading1>News</Heading1>
         </Box>
-        <TableCustom data={MedicineMock} />
+        <TableCustom data={NewsMock} />
       </Container>
     </Layout>
   );
