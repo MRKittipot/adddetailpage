@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <Nav>
       <div>
-        <Link onClick={() => navigate("/")}>Home</Link>
+        <Link onClick={() => navigate("/home")}>Home</Link>
       </div>
     </Nav>
   );

@@ -6,8 +6,11 @@ import LOGO from "../assets/Logo.svg";
 import TextField from "../common/TextField.common";
 import AccountIcon from "../assets/account.svg";
 import PasswordIcon from "../assets/password.svg";
+import LoginRouter from "../api/LoginRouter";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const naviagte = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,9 +23,18 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    const { email, password } = formData;
+
+    const response = await LoginRouter(email, password);
+
+    if (response) {
+      naviagte("/home");
+    } else {
+      alert("Invalid Credentials");
+    }
   };
 
   return (
@@ -54,6 +66,7 @@ const Login = () => {
                     type="email"
                     onChange={handleChange}
                     name="email"
+                    value={formData.email}
                   />
                   <TextField
                     placeholder="Password"
@@ -61,6 +74,7 @@ const Login = () => {
                     type="password"
                     onChange={handleChange}
                     name="password"
+                    value={formData.password}
                   />
                 </BoxForm>
               </div>

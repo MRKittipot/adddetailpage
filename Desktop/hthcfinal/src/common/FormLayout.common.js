@@ -8,9 +8,11 @@ import {
 } from "@mui/material";
 import styled from "styled-components";
 import Button from "./Button.common";
+import { useNavigate } from "react-router-dom";
+import { AddNewsRouter } from "../api/AddNewsRouter";
 
-const FormLayout = (props) => {
-  const { handleSubmit } = props;
+const FormLayout = () => {
+  const navigate = useNavigate();
   const [FormData, setFormData] = useState({
     title: "",
     description: "",
@@ -23,6 +25,18 @@ const FormLayout = (props) => {
 
   const handleChangeSelect = (event) => {
     setRole(event.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await AddNewsRouter(FormData, role);
+
+    if (response.message) {
+      navigate(`/${role}`);
+    } else {
+      alert("Error");
+    }
   };
 
   return (
@@ -51,8 +65,8 @@ const FormLayout = (props) => {
                 onChange={handleChangeSelect}
                 required
               >
-                <MenuItem value={"Medical"}>Medical</MenuItem>
-                <MenuItem value={"News"}>News</MenuItem>
+                <MenuItem value={"medicine"}>Medicine</MenuItem>
+                <MenuItem value={"news"}>News</MenuItem>
               </Select>
             </FormControl>
           </InLine>

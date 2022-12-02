@@ -7,13 +7,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 export default function TableCustom(props) {
   const naviagate = useNavigate();
-  const { data } = props;
+  const { data, header } = props;
 
   const handleClick = (id) => {
-    naviagate(`/card/news?q=${id}`);
+    naviagate(`/card/${header}?q=${id}`);
   };
 
   return (
@@ -29,7 +30,7 @@ export default function TableCustom(props) {
         <TableBody>
           {data.map((row) => (
             <TableCellCustom
-              key={row.title}
+              key={uuidv4()}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               onClick={() => handleClick(row.id)}
             >
@@ -37,7 +38,9 @@ export default function TableCustom(props) {
                 {row.title}
               </TableCell>
               <TableCell>{row.description}</TableCell>
-              <TableCell align="center">{row.publishDate}</TableCell>
+              <TableCell align="center">
+                {new Date(row.created_at).toLocaleDateString()}
+              </TableCell>
             </TableCellCustom>
           ))}
         </TableBody>

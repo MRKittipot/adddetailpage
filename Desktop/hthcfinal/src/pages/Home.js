@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Center from "../common/Center.common";
 import HomeTitle from "../components/HomeTitle";
 import Layout from "../components/Layout";
+import { v4 as uuidv4 } from "uuid";
+import AuthProvider from "../provider/AuthProvider";
 
 const Home = () => {
   const Title = [
@@ -14,28 +16,34 @@ const Home = () => {
       title: "Medicine",
       path: "/medicine",
     },
+    {
+      title: "Post",
+      path: "/post",
+    },
   ];
 
   return (
-    <Layout>
-      <Center>
-        <Container>
-          <div>
+    <AuthProvider>
+      <Layout>
+        <Center>
+          <Container>
             <div>
-              <Heding1Custom>HealtCare</Heding1Custom>
+              <div>
+                <Heding1Custom>Health Care</Heding1Custom>
+              </div>
+              <div>
+                <hr />
+              </div>
+              <div>
+                {Title.map((item) => {
+                  return <HomeTitle {...item} key={uuidv4()} />;
+                })}
+              </div>
             </div>
-            <div>
-              <hr />
-            </div>
-            <div>
-              {Title.map((item) => {
-                return <HomeTitle {...item} />;
-              })}
-            </div>
-          </div>
-        </Container>
-      </Center>
-    </Layout>
+          </Container>
+        </Center>
+      </Layout>
+    </AuthProvider>
   );
 };
 

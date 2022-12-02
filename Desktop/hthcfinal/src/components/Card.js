@@ -3,17 +3,22 @@ import styled from "styled-components";
 import Button from "../common/Button.common";
 import { useNavigate, useParams } from "react-router-dom";
 import { Chip } from "@mui/material";
+import { DeleteRouter } from "../api/deleteRouter";
+import { useSearchQuery } from "../hooks/useSearchQuery";
+import { UpdateRouter } from "../api/UpdateRouter";
 
 const Card = (props) => {
+  const { data } = props;
   const [isEditAble, setIsEditAble] = React.useState(false);
 
   const [form, setForm] = React.useState({
-    title: "",
-    description: "",
+    title: data.title,
+    description: data.description,
   });
 
   const navigate = useNavigate();
   const { id } = useParams();
+  const { searchQuery } = useSearchQuery();
   const textReference = React.useRef(null);
 
   const handleClick = () => {
@@ -26,15 +31,27 @@ const Card = (props) => {
     setForm({ ...form, [value]: e.currentTarget.textContent });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsEditAble(false);
+
+    if (!form.title === "") {
+      form.title = document.getElementById("title").textContent;
+    }
+
+    if (!form.description) {
+      form.description = document.getElementById("description").textContent;
+    }
+
     console.log(form);
+
+    await UpdateRouter(form, id, searchQuery);
+    alert("Update Success");
   };
 
-  const alertDelete = () => {
+  const alertDelete = async () => {
     if (window.confirm("Are you sure you wish to delete this item?")) {
-      // deleteItem();
+      await DeleteRouter(id, searchQuery);
       navigate(`/${id}`);
     }
   };
@@ -48,8 +65,9 @@ const Card = (props) => {
               onInput={(e) => handleChange(e, "title")}
               suppressContentEditableWarning={true}
               edit={isEditAble}
+              id="title"
             >
-              Title
+              {data.title}
             </Heading1>
             <Chip label={id} />
           </Header>
@@ -61,11 +79,9 @@ const Card = (props) => {
               onInput={(e) => handleChange(e, "description")}
               suppressContentEditableWarning={true}
               edit={isEditAble}
+              id="description"
             >
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. In
-              labore maxime quod dolore repellendus placeat qui nostrum facere,
-              impedit dolores tempora, minima consequuntur aut sint vitae
-              quibusdam corporis repellat totam?
+              {data.description}
             </Text>
           </div>
         </div>

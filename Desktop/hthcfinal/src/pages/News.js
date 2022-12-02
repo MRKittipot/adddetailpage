@@ -1,19 +1,24 @@
 import React from "react";
 import TableCustom from "../common/TableCustom.common";
-import { NewsMock } from "../mocks/NewsMock";
 import styled from "styled-components";
 import Layout from "../components/Layout";
+import AuthProvider from "../provider/AuthProvider";
+import { useFetch } from "../hooks/useFetch";
 
 const News = () => {
+  const { data } = useFetch("news");
+
   return (
-    <Layout>
-      <Container>
-        <Box>
-          <Heading1>News</Heading1>
-        </Box>
-        <TableCustom data={NewsMock} />
-      </Container>
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Container>
+          <Box>
+            <Heading1>News</Heading1>
+          </Box>
+          <TableCustom data={data} header="news" />
+        </Container>
+      </Layout>
+    </AuthProvider>
   );
 };
 
